@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-
+var Popular = require('./Popular');
 const USER_DATA = {
     name: 'Khusroo Hayat',
     username: 'khusroohayat',
@@ -73,7 +73,10 @@ class App extends React.Component {
         return (
             <div>
                 <ProfileCard user={USER_DATA} />
-                                </div>
+                <div className='container'>
+                    <Popular />
+                    </div>
+            </div>
         )
     }
 }
