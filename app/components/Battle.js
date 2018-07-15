@@ -1,5 +1,34 @@
 import React from 'react'
 import propTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+
+function PlayerPreview(props) {
+    return(
+        <div>
+            <div className='column'>
+            <img 
+                className='avatar'
+                src={props.avatar}
+                alt={'Avatar for '+ props.username}
+            />
+            <h2 className='username'>@{props.username}</h2>
+            </div>
+            <button
+            className='reset'
+            onClick={props.onReset.bind(null, props.id)}>
+            Reset
+            </button>
+        </div>
+    )
+}
+
+
+PlayerPreview.propTypes = {
+    avatar: propTypes.string.isRequired,
+    userName: propTypes.string.isRequired,
+    onReset: propTypes.func.isRequired,
+    id: propTypes.string.isRequired,
+}
 
 class PlayerInput extends React.Component {
     constructor(props) {
@@ -10,7 +39,7 @@ class PlayerInput extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-
+        
     }
 
     handleChange(event) {
@@ -79,6 +108,7 @@ class Battle extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleReset = this.handleReset.bind(this)
         
     }
     handleSubmit(id, username) {
@@ -89,10 +119,21 @@ class Battle extends React.Component {
             return newState
         })
     }
+    handleReset(id) {
+        this.setState(function () {
+            var newState = {}
+            newState[id + 'Name'] = ''
+            newState[id + 'Image'] = null
+            return newState
+        })
+    }
 
     render() {
+        const match = this.props.match
         const playerOneName = this.state.playerOneName
+        const playerOneImage = this.state.playerOneImage
         const playerTwoName = this.state.playerTwoName
+        const playerTwoImage = this.state.playerTwoImage
 
         return (
             <div>
@@ -104,13 +145,39 @@ class Battle extends React.Component {
                 onSubmit={this.handleSubmit}
                 />}
 
+                {playerOneImage !== null &&
+                <PlayerPreview
+                    avatar={playerOneImage}
+                    username={playerOneName}
+                    onReset={this.handleReset}
+                    id='playerOne'
+                 />}
+
                 {!playerTwoName &&
                 <PlayerInput
                 id='playerTwo'
                 label='Player Two'
                 onSubmit={this.handleSubmit}
                 />}
+
+                {playerTwoImage !== null &&
+                    <PlayerPreview 
+                    avatar={playerTwoImage}
+                    username={playerTwoName}
+                    onReset={this.handleReset}
+                    id='playerTwo'
+                />}
                 </div>
+
+                {playerOneImage && playerTwoImage &&
+                <Link
+                className='button'
+                to={{
+                    pathname: match.url + '/results',
+                    search: '?playerOneName=' + playerOneName + '&playerTwoName=' + playerTwoName
+                }}>
+                    Battle
+                </Link>}
                 </div>
         )
     }
