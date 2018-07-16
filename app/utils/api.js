@@ -1,7 +1,7 @@
 import axios from "../../node_modules/axios";
 
-var id= "YOUR_CLIENT_ID";
-var sec= "Your_SECRET_ID";
+var id= "client_id";
+var sec= "client_secret";
 var params = "?client_id=" + id + "&client_secret=" + sec;
 
 function getProfile (username) {
@@ -22,7 +22,7 @@ function getStarCount (repos) {
 }
 
 function calculateScore (profile, repos) {
-    const followers = propfile.followers
+    const followers = profile.followers
     const totalStars = getStarCount(repos)
 
     return (followers * 3) + totalStars
