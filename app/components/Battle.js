@@ -30,7 +30,7 @@ class PlayerInput extends React.Component {
 
         this.props.onSubmit(
             this.props.id,
-            this.props.username
+            this.state.username
         )
     }
 
