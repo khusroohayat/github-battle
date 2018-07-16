@@ -1,7 +1,7 @@
 import axios from "../../node_modules/axios";
 
-var id= "0c86b4bddaae3f2268c2";
-var sec= "ce55d2fc73193236085c41d7d4751d58b25b5b91";
+var id= "client_id";
+var sec= "client_secret";
 var params = "?client_id=" + id + "&client_secret=" + sec;
 
 function getProfile (username) {
